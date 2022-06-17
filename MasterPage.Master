@@ -1,0 +1,86 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.master.cs" Inherits="Library_Management.MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css"/>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <link href="StyleSheet1.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div id="main">
+            <div id="menu">
+        
+               <div class="tblhead">welcome <asp:Label ID="lblname" runat="server" ForeColor="White"></asp:Label></div>
+                    
+        <table style="width:100%">
+            <tr>
+                <td>
+                    <asp:Button ID="Button11" runat="server" CssClass="btnmenu" Text="Add Publication" 
+                        PostBackUrl="~/Add_Publication.aspx" CausesValidation="False"  />
+                </td>
+                <td>
+                    <asp:Button ID="Button3" runat="server" CssClass="btnmenu" Text="Add Branch" 
+                        PostBackUrl="~/Addbranch.aspx" CausesValidation="False" />
+                </td>
+                <td>
+                    <asp:Button ID="Button1" runat="server" CssClass="btnmenu" Text="Add Book" 
+                        PostBackUrl="~/Addbook.aspx" CausesValidation="False" />
+                </td>
+                <td>
+                    <asp:Button ID="Button2" runat="server" CssClass="btnmenu" Text="Book Report" 
+                        CausesValidation="False" PostBackUrl="~/bookreport.aspx" />
+                </td>
+                <td>
+                    <asp:Button ID="Button4" runat="server" CssClass="btnmenu" Text="Add Student" 
+                        PostBackUrl="~/AddStudent.aspx" CausesValidation="False" />
+                </td>
+                <td>
+                    <asp:Button ID="Button5" runat="server" CssClass="btnmenu" 
+                        Text="Student Report" CausesValidation="False" 
+                        PostBackUrl="~/Studenteport.aspx" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Button ID="Button6" runat="server" CssClass="btnmenu" Text="Issue Book" 
+                        CausesValidation="False" PostBackUrl="~/BookIssue.aspx" />
+                </td>
+                <td>
+                    <asp:Button ID="Button7" runat="server" CssClass="btnmenu" 
+                        Text="Issue Report" CausesValidation="False" 
+                        PostBackUrl="~/Issuereport.aspx" />
+                </td>
+                <td>
+                    <asp:Button ID="Button8" runat="server" CssClass="btnmenu" Text="Return Book" 
+                        CausesValidation="False" PostBackUrl="~/BookReturn.aspx" />
+                </td>
+                <td>
+                    <asp:Button ID="Button9" runat="server" CssClass="btnmenu" Text="Penalty" 
+                        CausesValidation="False" PostBackUrl="~/Penalty.aspx" />
+                </td>
+                <td>
+                    <asp:Button ID="Button12" runat="server" CssClass="btnmenu" Text="Penalty Report" 
+                        CausesValidation="False" PostBackUrl="~/MyPenalty.aspx" />
+                </td>
+                <td>
+                    <asp:Button ID="Button10" runat="server" CssClass="btnmenu" Text="LogOut" 
+                        CausesValidation="False"/>
+                </td>
+            </tr>
+        </table>
+        </div>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+            </div>
+    </form>
+</body>
+</html>
