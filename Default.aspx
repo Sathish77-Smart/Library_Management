@@ -14,7 +14,7 @@
         }
         #login{
             position: absolute;
-            background-color: lightblue;
+            background-color: #5d8ef0;
             left: 40%;
             top: 10%;
             border: 1px solid #ccc;
@@ -72,8 +72,8 @@
                     &nbsp;</td>
                 <td>
                     <asp:RadioButton ID="rdolibrary" runat="server" Checked="True" 
-                        ForeColor="Green" GroupName="a" Text="Librarian" />
-&nbsp;<asp:RadioButton ID="rdosudent" runat="server" ForeColor="Green" GroupName="a" 
+                        ForeColor="black" GroupName="a" Text="Librarian" />
+&nbsp;<asp:RadioButton ID="rdosudent" runat="server" ForeColor="black" GroupName="a" 
                         Text="Student" />
                 </td>
             </tr>

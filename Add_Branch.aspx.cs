@@ -9,14 +9,14 @@ using System.Web.UI.WebControls;
 
 namespace Library_Management
 {
-    public partial class Add_Publication : System.Web.UI.Page
+    public partial class Add_Branch : System.Web.UI.Page
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Library"].ConnectionString);
         Connect_db connect_Db = new Connect_db();
         protected void Page_Load(object sender, EventArgs e)
         {
             con.Open();
-            var data = connect_Db.Publication_Select(con);
+            var data = connect_Db.Branch_Select(con);
             GridView1.DataSource = data;
             GridView1.DataBind();
             con.Close();
@@ -25,20 +25,42 @@ namespace Library_Management
         protected void btnadd_Click(object sender, EventArgs e)
         {
             con.Open();
-            connect_Db.Publication_Insert(txtpub.Text, con);
-            var data = connect_Db.Publication_Select(con);
+            connect_Db.Branch_Insert(txtpub.Text, con);
+            var data = connect_Db.Branch_Select(con);
             GridView1.DataSource = data;
             GridView1.DataBind();
             con.Close();
         }
         protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
-        { 
-            string id = GridView1.Rows[e.NewEditIndex].Cells[1].Text;
-            string name = GridView1.Rows[e.NewEditIndex].Cells[2].Text;
-            TextBox2.Text = id;
-            TextBox1.Text = name;
-            add_panel.Visible = false;
-            edit_panel.Visible = true;
+        {
+            con.Open();
+            GridView1.EditIndex = e.NewEditIndex;
+            var data = connect_Db.Branch_Select(con);
+            GridView1.DataSource = data;
+            GridView1.DataBind();
+            con.Close();
+        }
+        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            con.Open();
+            GridView1.EditIndex = -1;
+            var data = connect_Db.Branch_Select(con);
+            GridView1.DataSource = data;
+            GridView1.DataBind();
+            con.Close();
+        }
+        protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            con.Open();
+            int pid = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Value);
+            TextBox pname = GridView1.Rows[e.RowIndex].Cells[1].Controls[0] as TextBox;
+            connect_Db.Branch_Update(pid, pname.Text, con);
+            lblmsg.Text = "Record Updated !!";
+            GridView1.EditIndex = -1;
+            var data = connect_Db.Branch_Select(con);
+            GridView1.DataSource = data;
+            GridView1.DataBind();
+            con.Close();
         }
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -59,34 +81,6 @@ namespace Library_Management
                 GridView1.DataSource = data;
                 GridView1.DataBind();
             }*/
-            con.Close();
-        }
-
-        protected void Update_Click(object sender, EventArgs e)
-        {
-            con.Open();
-            add_panel.Visible = true;
-            edit_panel.Visible = false;
-            connect_Db.Publication_Update(Convert.ToInt16(TextBox2.Text), TextBox1.Text, con);
-            GridView1.EditIndex = -1;
-            var data = connect_Db.Publication_Select(con);
-            GridView1.DataSource = data;
-            GridView1.DataBind();
-            TextBox1.Text = "";
-            TextBox2.Text = "";
-            con.Close();
-        }
-        protected void Cancel_Click(object sender, EventArgs e)
-        {
-            con.Open();
-            add_panel.Visible = true;
-            edit_panel.Visible = false;
-            TextBox1.Text = "";
-            TextBox2.Text = "";
-            GridView1.EditIndex = -1;
-            var data = connect_Db.Publication_Select(con);
-            GridView1.DataSource = data;
-            GridView1.DataBind();
             con.Close();
         }
     }

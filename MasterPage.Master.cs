@@ -11,11 +11,11 @@ namespace Library_Management
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["admin_id"] == null)
+            /*if (Session["admin_id"] == null)
             {
                 Response.Redirect("Default.aspx");
             }
-            lblname.Text = Session["admin_user"].ToString();
+            lblname.Text = Session["admin_user"].ToString();*/
         }
     }
 }

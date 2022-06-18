@@ -13,6 +13,7 @@ namespace Library_Management
     public partial class Default : System.Web.UI.Page
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Library"].ConnectionString);
+        Connect_db login_Db = new Connect_db();
         protected void Page_Load(object sender, EventArgs e)
         {
             lbl.Text = "";
@@ -20,7 +21,6 @@ namespace Library_Management
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Login_db login_Db = new Login_db();
             con.Open();
             if (rdolibrary.Checked == true)
             {

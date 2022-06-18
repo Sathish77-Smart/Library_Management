@@ -27,7 +27,7 @@
                 </td>
                 <td>
                     <asp:Button ID="Button3" runat="server" CssClass="btnmenu" Text="Add Branch" 
-                        PostBackUrl="~/Addbranch.aspx" CausesValidation="False" />
+                        PostBackUrl="~/Add_Branch.aspx" CausesValidation="False" />
                 </td>
                 <td>
                     <asp:Button ID="Button1" runat="server" CssClass="btnmenu" Text="Add Book" 
