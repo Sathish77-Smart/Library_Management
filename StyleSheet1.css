@@ -55,7 +55,7 @@
     }
 
 .btn:hover {
-    background: green;
+    background: #b2bbc2;
     color: #fff;
     font-weight: bold;
     height: 30px;
@@ -63,7 +63,7 @@
 }
 
 .btn {
-    background: #888c8f;
+    background: #848b91;
     color: #fff;
     font-weight: bold;
     height: 30px;

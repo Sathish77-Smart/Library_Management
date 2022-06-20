@@ -31,11 +31,11 @@
                 </td>
                 <td>
                     <asp:Button ID="Button1" runat="server" CssClass="btnmenu" Text="Add Book" 
-                        PostBackUrl="~/Addbook.aspx" CausesValidation="False" />
+                        PostBackUrl="~/Add_Book.aspx" CausesValidation="False" />
                 </td>
                 <td>
                     <asp:Button ID="Button2" runat="server" CssClass="btnmenu" Text="Book Report" 
-                        CausesValidation="False" PostBackUrl="~/bookreport.aspx" />
+                        CausesValidation="False" PostBackUrl="~/BookReport.aspx" />
                 </td>
                 <td>
                     <asp:Button ID="Button4" runat="server" CssClass="btnmenu" Text="Add Student" 

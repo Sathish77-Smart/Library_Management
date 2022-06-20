@@ -31,36 +31,41 @@ namespace Library_Management
             GridView1.DataBind();
             con.Close();
         }
+        protected void Update_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            add_panel.Visible = true;
+            edit_panel.Visible = false;
+            connect_Db.Branch_Update(Convert.ToInt16(TextBox2.Text), TextBox1.Text, con);
+            GridView1.EditIndex = -1;
+            var data = connect_Db.Branch_Select(con);
+            GridView1.DataSource = data;
+            GridView1.DataBind();
+            TextBox1.Text = "";
+            TextBox2.Text = "";
+            con.Close();
+        }
+        protected void Cancel_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            add_panel.Visible = true;
+            edit_panel.Visible = false;
+            TextBox1.Text = "";
+            TextBox2.Text = "";
+            GridView1.EditIndex = -1;
+            var data = connect_Db.Branch_Select(con);
+            GridView1.DataSource = data;
+            GridView1.DataBind();
+            con.Close();
+        }
         protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            con.Open();
-            GridView1.EditIndex = e.NewEditIndex;
-            var data = connect_Db.Branch_Select(con);
-            GridView1.DataSource = data;
-            GridView1.DataBind();
-            con.Close();
-        }
-        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            con.Open();
-            GridView1.EditIndex = -1;
-            var data = connect_Db.Branch_Select(con);
-            GridView1.DataSource = data;
-            GridView1.DataBind();
-            con.Close();
-        }
-        protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-            con.Open();
-            int pid = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Value);
-            TextBox pname = GridView1.Rows[e.RowIndex].Cells[1].Controls[0] as TextBox;
-            connect_Db.Branch_Update(pid, pname.Text, con);
-            lblmsg.Text = "Record Updated !!";
-            GridView1.EditIndex = -1;
-            var data = connect_Db.Branch_Select(con);
-            GridView1.DataSource = data;
-            GridView1.DataBind();
-            con.Close();
+            string id = GridView1.Rows[e.NewEditIndex].Cells[1].Text;
+            string name = GridView1.Rows[e.NewEditIndex].Cells[2].Text;
+            TextBox2.Text = id;
+            TextBox1.Text = name;
+            add_panel.Visible = false;
+            edit_panel.Visible = true;
         }
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -83,5 +88,6 @@ namespace Library_Management
             }*/
             con.Close();
         }
+
     }
 }
