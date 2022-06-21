@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace Library_Management
 {
-    public partial class Add_Book : System.Web.UI.Page
+    public partial class Add_Student : System.Web.UI.Page
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Library"].ConnectionString);
         Connect_db connect_Db = new Connect_db();
@@ -21,21 +21,15 @@ namespace Library_Management
             if (Page.IsPostBack == false)
             {
                 con.Open();
-                var data = connect_Db.Book_Select(con);
+                var data = connect_Db.Student_Select(con);
                 GridView1.DataSource = data;
                 GridView1.DataBind();
-                var pub = connect_Db.Publication_Select(con);
-                DropDownList2.DataSource = pub;
-                DropDownList2.DataTextField = "Publication_name";
-                DropDownList2.DataValueField = "Id";
-                DropDownList2.DataBind();
-                DropDownList2.Items.Insert(0, "SELECT");
                 var branch = connect_Db.Branch_Select(con);
-                DropDownList1.DataSource = branch;
-                DropDownList1.DataTextField = "BranchName";
-                DropDownList1.DataValueField = "Id";
-                DropDownList1.DataBind();
-                DropDownList1.Items.Insert(0, "SELECT");
+                drpbranch.DataSource = branch;
+                drpbranch.DataTextField = "BranchName";
+                drpbranch.DataValueField = "Id";
+                drpbranch.DataBind();
+                drpbranch.Items.Insert(0, "SELECT");
                 con.Close();
             }
         }
@@ -50,8 +44,8 @@ namespace Library_Management
                     Stream strm = FileUpload1.PostedFile.InputStream;
                     using (var image = System.Drawing.Image.FromStream(strm))
                     {
-                        int newWidth = 207; // New Width of Image in Pixel  
-                        int newHeight = 228; // New Height of Image in Pixel  
+                        int newWidth = 183; // New Width of Image in Pixel  
+                        int newHeight = 211; // New Height of Image in Pixel  
                         var thumbImg = new Bitmap(newWidth, newHeight);
                         var thumbGraph = Graphics.FromImage(thumbImg);
                         thumbGraph.CompositingQuality = CompositingQuality.HighQuality;
@@ -59,14 +53,14 @@ namespace Library_Management
                         thumbGraph.InterpolationMode = InterpolationMode.HighQualityBicubic;
                         var imgRectangle = new Rectangle(0, 0, newWidth, newHeight);
                         thumbGraph.DrawImage(image, imgRectangle);
-                        string targetPath = Server.MapPath(@"~\Book\") + FileUpload1.FileName;
+                        string targetPath = Server.MapPath(@"~\Student\") + FileUpload1.FileName;
                         thumbImg.Save(targetPath, image.RawFormat);
-                        connect_Db.Book_Insert(txtpub.Text, TextBox3.Text, TextBox4.Text, DropDownList2.SelectedValue, DropDownList1.SelectedValue, Convert.ToDouble(TextBox7.Text), Convert.ToInt32(TextBox6.Text), "~/Book/"+FileUpload1.FileName.ToString(), con);
-                        var data = connect_Db.Book_Select(con);
+                        connect_Db.Student_Insert(txtsname.Text, drpbranch.SelectedValue, DropDownList1.SelectedValue, Convert.ToDateTime(TextBox1.Text).ToString("dd/MM/yyyy"), txtmobile.Text, txtaddress.Text, txtcity.Text, txtpincode.Text, "~/Student/" + FileUpload1.FileName.ToString(), txtemail.Text, txtpass.Text, con);
+                        var data = connect_Db.Student_Select(con);
                         GridView1.DataSource = data;
                         GridView1.DataBind();
                         con.Close();
-                        lblmsg.Text = "Book Added Successfullly !!";
+                        lblmsg.Text = "Student Added Successfullly !!";
                     }
                 }
                 else
@@ -76,20 +70,21 @@ namespace Library_Management
             }
             else
             {
-                connect_Db.Book_Insert(txtpub.Text, TextBox3.Text, TextBox4.Text, DropDownList2.SelectedValue, DropDownList1.SelectedValue, Convert.ToDouble(TextBox7.Text), Convert.ToInt32(TextBox6.Text),null, con);
-                var data = connect_Db.Book_Select(con);
+                connect_Db.Student_Insert(txtsname.Text, drpbranch.SelectedValue, DropDownList1.SelectedValue, txtmobile.Text, Convert.ToDateTime(TextBox1.Text).ToString("dd/MM/yyyy"), txtaddress.Text, txtcity.Text, txtpincode.Text,null, txtemail.Text, txtpass.Text, con);
+                var data = connect_Db.Student_Select(con);
                 GridView1.DataSource = data;
                 GridView1.DataBind();
                 con.Close();
-                lblmsg.Text = "Book Added Successfullly !!";
+                lblmsg.Text = "Student Added Successfullly !!";
             }
-            txtpub.Text = "";
-            TextBox3.Text = "";
-            TextBox4.Text = "";
-            TextBox7.Text = "";
-            TextBox6.Text = "";
-            DropDownList2.SelectedIndex = 0;
+            txtsname.Text = ""; drpbranch.SelectedIndex = 0;
             DropDownList1.SelectedIndex = 0;
+            txtmobile.Text = "";
+            txtaddress.Text = ""; txtcity.Text = "";
+            txtpincode.Text = "";
+            txtemail.Text = "";
+            txtpass.Text = "";
+            TextBox1.Text = "";
 
         }
     }

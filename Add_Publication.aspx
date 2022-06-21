@@ -16,7 +16,7 @@
             width: 100%;
             border: solid 1px blue;
             background: #bce0f5;
-            margin-left: 4px;
+            margin-left: 0px;
         }
         </style>
 </asp:Content>

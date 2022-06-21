@@ -16,24 +16,29 @@ namespace Library_Management
         {
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                string cmd2 = "select Publication_name from Publication_Master where Id = " + ds.Tables[0].Rows[i]["Publication"] + "";
-                SqlCommand SqlCmd2 = new SqlCommand(cmd2, con);
-                SqlDataReader dr = SqlCmd2.ExecuteReader();
-                if (dr.HasRows)
-                {
-                    dr.Read();
-                    ds.Tables[0].Rows[i]["Publication"] = dr["Publication_name"].ToString();
+                if (ds.Tables[0].Columns.Contains("Publication")) {
+                    string cmd2 = "select Publication_name from Publication_Master where Id = " + ds.Tables[0].Rows[i]["Publication"] + "";
+                    SqlCommand SqlCmd2 = new SqlCommand(cmd2, con);
+                    SqlDataReader dr = SqlCmd2.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        ds.Tables[0].Rows[i]["Publication"] = dr["Publication_name"].ToString();
+                    }
+                    dr.Close();
                 }
-                dr.Close();
-                string cmd3 = "select BranchName from Branch_Master where Id = " + ds.Tables[0].Rows[i]["Branch"] + "";
-                SqlCommand SqlCmd3 = new SqlCommand(cmd3, con);
-                SqlDataReader dr1 = SqlCmd3.ExecuteReader();
-                if (dr1.HasRows)
+                if (ds.Tables[0].Columns.Contains("Branch"))
                 {
-                    dr1.Read();
-                    ds.Tables[0].Rows[i]["Branch"] = dr1["BranchName"].ToString();
+                    string cmd3 = "select BranchName from Branch_Master where Id = " + ds.Tables[0].Rows[i]["Branch"] + "";
+                    SqlCommand SqlCmd3 = new SqlCommand(cmd3, con);
+                    SqlDataReader dr1 = SqlCmd3.ExecuteReader();
+                    if (dr1.HasRows)
+                    {
+                        dr1.Read();
+                        ds.Tables[0].Rows[i]["Branch"] = dr1["BranchName"].ToString();
+                    }
+                    dr1.Close();
                 }
-                dr1.Close();
             }
             return ds;
         }
@@ -188,5 +193,103 @@ namespace Library_Management
             var ds1 = Convert_Id_to_Name(ds, con);
             return ds1;
         }
+
+        // Student
+        public DataSet Student_Select(SqlConnection con)
+        {
+            string cmd1 = "select * from Student_Table";
+            SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+            DataSet ds = new DataSet();
+            SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
+            da.Fill(ds);
+            var ds1 = Convert_Id_to_Name(ds, con);
+            return ds1;
+        }
+        public void Student_Insert(string name, string branch, string gender, string dob, string mobile, string address, string city, string pincode, string photo, string email, string password, SqlConnection con)
+        {
+            string cmd1 = "Update Number_master Set Student_Id = Student_Id + 1 ";
+            SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+            SqlCmd1.ExecuteNonQuery();
+            string cmd2 = "Select Student_Id from Number_master ";
+            SqlCommand SqlCmd2 = new SqlCommand(cmd2, con);
+            SqlDataReader dr = SqlCmd2.ExecuteReader();
+            dr.Read();
+            int Id = dr.GetInt32(0);
+            dr.Close();
+            string cmd = "Insert into Student_Table values (" + Id + ",'" + name + "','" + branch + "','" + gender + "','" + dob + "','" + mobile + "','" + address + "','" + city + "','" + pincode + "','" + photo + "','" + email + "','" + password + "')";
+            SqlCommand SqlCmd3 = new SqlCommand(cmd, con);
+            SqlCmd3.ExecuteNonQuery();
+            string cmd3 = "Insert into Student_Login values (" + Id + ",'" + name + "','" + password + "','student')";
+            SqlCommand SqlCmd4 = new SqlCommand(cmd3, con);
+            SqlCmd4.ExecuteNonQuery();
+        }
+        public DataSet Student_Report_Select(int id, string branch, string name, SqlConnection con)
+        {
+            if(id != 0)
+            {
+                string cmd1 = "select * from Student_Table where Id = "+id+"";
+                SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
+                da.Fill(ds);
+                var ds1 = Convert_Id_to_Name(ds, con);
+                return ds1;
+            }
+            else
+            {
+                string cmd1 = "select * from Student_Table where Branch = '" + branch + "' and StudentName = '" + name + "'";
+                SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
+                da.Fill(ds);
+                var ds1 = Convert_Id_to_Name(ds, con);
+                return ds1;
+            }
+        }
+        public DataSet Student_Branch_Select(string branch, SqlConnection con)
+        {
+            string cmd1 = "select * from Student_Table where Branch = '"+branch+"'";
+            SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+            DataSet ds = new DataSet();
+            SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
+            da.Fill(ds);
+            var ds1 = Convert_Id_to_Name(ds, con);
+            return ds1;
+        }
+
+        // Issue Book
+        public DataSet Select_IBook_Row(string bookname, int stu_id, SqlConnection con)
+        {
+            if(bookname == null)
+            {
+                string cmd1 = "select * from Issue_Books where StudentId = " + stu_id + "";
+                SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
+                da.Fill(ds);
+                var ds1 = Convert_Id_to_Name(ds, con);
+                return ds1;
+            }
+            else
+            {
+                string cmd1 = "select * from Issue_Books where BookName = '" + bookname + "' and StudentId = " + stu_id + "";
+                SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
+                da.Fill(ds);
+                var ds1 = Convert_Id_to_Name(ds, con);
+                return ds1;
+            }
+        }
+        public void Issue_Book_Insert(int bookid, string bookname, int stuid, string stuname, string branch, string publi, int returndays, string issuedate, SqlConnection con)
+        {
+            string cmd = "Insert into Issue_Books values (" + bookid + ",'" + bookname + "'," + stuid + ",'" + stuname + "','" + branch + "','" + publi + "'," + returndays + ",'" + issuedate + "')";
+            SqlCommand SqlCmd3 = new SqlCommand(cmd, con);
+            SqlCmd3.ExecuteNonQuery();
+            string cmd1 = "Update Book_Master set Available_Qty = Available_Qty - 1, Rent = Rent + 1 where BookName = '"+bookname+"'";
+            SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+            SqlCmd1.ExecuteNonQuery();
+        }
+
     }
 }

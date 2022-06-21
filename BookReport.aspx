@@ -48,7 +48,7 @@
                         <asp:DropDownList ID="DropDownList1" runat="server" Width="150px"></asp:DropDownList>&nbsp;
                         </td>
                     <td>
-                            <asp:Button ID="btnviewbranch" runat="server" Text="View" CssClass="btn"
+                            <asp:Button ID="btnviewbranch" runat="server" Text="View" CssClass="btn" Font-Size="Small"
                             onclick="btnviewbranch_Click" />
                     </td>
                     <td class="style2">
@@ -58,7 +58,7 @@
                         <asp:DropDownList ID="DropDownList2" runat="server" Width="150px"></asp:DropDownList>&nbsp;
                         </td>
                     <td>
-                            <asp:Button ID="btnviewpublication" runat="server" CssClass="btn"
+                            <asp:Button ID="btnviewpublication" runat="server" CssClass="btn" Font-Size="Small"
                             Text="View" onclick="btnviewpublication_Click" />
                     </td>
                 </tr>
@@ -149,7 +149,7 @@
                                                     <td>
                                                         &nbsp;</td>
                                                     <td class="style11" style="font-size: small;font-weight:bold;">
-                                                        Autor :</td>
+                                                        AutHor :</td>
                                                     <td>
                                                         <asp:Label ID="lblauthor" runat="server"></asp:Label>
                                                     </td>
