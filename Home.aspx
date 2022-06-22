@@ -19,7 +19,7 @@
     </tr>
     <tr>
         <td style="text-align: center">
-            <!--<asp:Image ID="Image2" runat="server" ImageUrl="~/img/lin3.png" />-->
+               Welcome <asp:Label ID="Label1" runat="server" Text="Label" Font-Size="Medium" Font-Bold="true"></asp:Label>
         </td>
     </tr>
 </table>

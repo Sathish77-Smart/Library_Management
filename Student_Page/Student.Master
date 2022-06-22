@@ -1,0 +1,61 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Student.master.cs" Inherits="Library_Management.Student_Page.Student" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css"/>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <link href="StyleSheet1.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .auto-style2 {
+            height: 84px;
+            width: 1182px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div id="main">
+            <div id="menu" class="auto-style2">
+        
+               <div class="tblhead">welcome <asp:Label ID="lblname" runat="server" ForeColor="White"></asp:Label></div>
+                    
+        <table style="width:100%">
+            <tr align="center">
+                <td>
+                    <asp:Button ID="Button11" runat="server" CssClass="btnmenu" Text="My Account" 
+                        PostBackUrl="~/Student_Page/MyAccount.aspx" CausesValidation="False"  />
+                </td>
+                <td>
+                    <asp:Button ID="Button3" runat="server" CssClass="btnmenu" Text="My Report" 
+                        PostBackUrl="~/Student_Page/MyBook.aspx" CausesValidation="False" />
+                </td>
+                <td>
+                    <asp:Button ID="Button1" runat="server" CssClass="btnmenu" Text="Penalty Report" 
+                        PostBackUrl="~/Student_Page/MyPenalty.aspx" CausesValidation="False" />
+                </td>
+                <td>
+                    <asp:Button ID="Button2" runat="server" CssClass="btnmenu" Text="Book Report" 
+                        CausesValidation="False" PostBackUrl="~/Student_Page/bookreport.aspx" />
+                </td>
+                <td>
+                    <asp:Button ID="Button4" runat="server" CssClass="btnmenu" Text="Logout" 
+                         CausesValidation="False" />
+                </td>
+            </tr>
+        </table>
+        </div>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+            </div>
+    </form>
+</body>
+</html>
+

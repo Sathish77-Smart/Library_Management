@@ -256,13 +256,48 @@ namespace Library_Management
             var ds1 = Convert_Id_to_Name(ds, con);
             return ds1;
         }
+        public void Student_Update(int id, string name, string mobile, string address, string city, string pincode, string email, SqlConnection con)
+        {
+            string cmd2 = "Update Student_Table set StudentName = '"+name+"', Mobile = '"+mobile+"', Address = '"+address+"', City = '"+city+"', Pincode = '"+pincode+"', Email = '"+email+"' where Id = " + id + "";
+            SqlCommand SqlCmd2 = new SqlCommand(cmd2, con);
+            SqlCmd2.ExecuteNonQuery();
+            string cmd3 = "Update Student_Login set Username = '" + name + "' where Id = " + id + "";
+            SqlCommand SqlCmd3 = new SqlCommand(cmd3, con);
+            SqlCmd3.ExecuteNonQuery();
+        }
+        public void Student_Password_Update(int id, string pass, SqlConnection con)
+        {
+            string cmd3 = "Update Student_Login set Password = '" + pass + "' where Id = " + id + "";
+            SqlCommand SqlCmd3 = new SqlCommand(cmd3, con);
+            SqlCmd3.ExecuteNonQuery();
+        }
 
         // Issue Book
-        public DataSet Select_IBook_Row(string bookname, int stu_id, SqlConnection con)
+        public DataSet Select_IBook_Row(string bookname, int stu_id, string Branch, SqlConnection con)
         {
-            if(bookname == null)
+            if(bookname == null && Branch == null)
             {
-                string cmd1 = "select * from Issue_Books where StudentId = " + stu_id + "";
+                string cmd1 = "select * from Issue_Books where StudentId = " + stu_id + " and Book_Return = 1";
+                SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
+                da.Fill(ds);
+                var ds1 = Convert_Id_to_Name(ds, con);
+                return ds1;
+            }
+            else if(bookname != null && stu_id > 0)
+            {
+                string cmd1 = "select * from Issue_Books where BookName = '" + bookname + "' and StudentId = " + stu_id + " and Book_Return = 1";
+                SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
+                da.Fill(ds);
+                var ds1 = Convert_Id_to_Name(ds, con);
+                return ds1;
+            }
+            else if(Branch!= null && stu_id > 0 && bookname == null)
+            {
+                string cmd1 = "select * from Issue_Books where Branch = '" + Branch + "' and Book_Return = 1 and StudentId = " + stu_id + "";
                 SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
                 DataSet ds = new DataSet();
                 SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
@@ -272,7 +307,7 @@ namespace Library_Management
             }
             else
             {
-                string cmd1 = "select * from Issue_Books where BookName = '" + bookname + "' and StudentId = " + stu_id + "";
+                string cmd1 = "select * from Issue_Books where Branch = '" + Branch + "' and StudentId = " + stu_id + " and Book_Return = 1 and BookName = '"+bookname+"'";
                 SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
                 DataSet ds = new DataSet();
                 SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
@@ -283,12 +318,39 @@ namespace Library_Management
         }
         public void Issue_Book_Insert(int bookid, string bookname, int stuid, string stuname, string branch, string publi, int returndays, string issuedate, SqlConnection con)
         {
-            string cmd = "Insert into Issue_Books values (" + bookid + ",'" + bookname + "'," + stuid + ",'" + stuname + "','" + branch + "','" + publi + "'," + returndays + ",'" + issuedate + "')";
+            DateTime returndate = Convert.ToDateTime(issuedate);
+            returndate.AddDays(returndays);
+            string cmd = "Insert into Issue_Books(BookId,BookName,StudentId,StudentName,Branch,Publication,Return_Days,Issue_Date,Book_Return,Due_Date) values (" + bookid + ",'" + bookname + "'," + stuid + ",'" + stuname + "','" + branch + "','" + publi + "'," + returndays + ",'" + issuedate + "',"+1+",'"+returndate.ToString("dd/MM/yyyy")+"')";
             SqlCommand SqlCmd3 = new SqlCommand(cmd, con);
             SqlCmd3.ExecuteNonQuery();
             string cmd1 = "Update Book_Master set Available_Qty = Available_Qty - 1, Rent = Rent + 1 where BookName = '"+bookname+"'";
             SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
             SqlCmd1.ExecuteNonQuery();
+        }
+
+        // Return Book
+        public void Book_Return(int BookId, int IssueId, int StudentId, SqlConnection con)
+        {
+            string cmd1 = "Update Book_Master set Available_Qty = Available_Qty + 1, Rent = Rent - 1 where Id = '" + BookId + "'";
+            SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+            SqlCmd1.ExecuteNonQuery();
+            DateTime dateTime = DateTime.Now;
+            string cmd2 = "Update Issue_Books set Book_Return = 0, Return_Days = 0, Return_Date = '"+dateTime.ToString("dd/MM/yyyy")+"' where BookId = " + BookId + " and Id = "+IssueId+" and StudentId = "+StudentId+"";
+            SqlCommand SqlCmd2 = new SqlCommand(cmd2, con);
+            SqlCmd2.ExecuteNonQuery();
+        }
+
+        // Penalty 
+        public void Penalty(int issueid, int StudentId, string StudentName, int BookId, string BranchId, double penaltyamt, string Reason, SqlConnection con)
+        {
+            string cmd = "Insert into Penalty_Table values (" + issueid + "," + StudentId + ",'" + StudentName + "'," + BookId + ",'" + BranchId + "'," + penaltyamt + ",'" + Reason + "')";
+            SqlCommand SqlCmd3 = new SqlCommand(cmd, con);
+            SqlCmd3.ExecuteNonQuery();
+            DateTime dateTime = DateTime.Now;
+            dateTime.AddDays(2);
+            string cmd2 = "Update Issue_Books set Due_Date = '"+ dateTime.ToString("dd/MM/yyyy") + "' where BookId = " + BookId + " and Id = " + issueid + " and StudentId = " + StudentId + "";
+            SqlCommand SqlCmd2 = new SqlCommand(cmd2, con);
+            SqlCmd2.ExecuteNonQuery();
         }
 
     }

@@ -52,7 +52,7 @@ namespace Library_Management
                     Session["student_user"] = data["Username"].ToString();
                     data.Close();
                     lbl.Text = "Login as Student";
-                    //Response.Redirect("");
+                    Response.Redirect("~/Student_Page/Default.aspx");
                 }
                 con.Close();
             }

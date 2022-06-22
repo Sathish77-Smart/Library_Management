@@ -152,7 +152,7 @@
                                                 <tr>
                                                     <td class="auto-style2">
                                                         &nbsp;</td>
-                                                    <td class="auto-style1" style="font-size: small;font-weight:bold;">
+                                                    <td class="" style="font-size: small;font-weight:bold;">
                                                         Author :</td>
                                                     <td class="auto-style7">
                                                         <asp:Label ID="lblauthor" runat="server"></asp:Label>
@@ -163,7 +163,7 @@
                                                 <tr>
                                                     <td class="auto-style2">
                                                         &nbsp;</td>
-                                                    <td class="auto-style1" style="font-size: small;font-weight:bold;">
+                                                    <td class="" style="font-size: small;font-weight:bold;">
                                                         Publication :
                                                     </td>
                                                     <td class="auto-style7">
@@ -175,7 +175,7 @@
                                                 <tr>
                                                     <td class="auto-style2">
                                                         &nbsp;</td>
-                                                    <td class="auto-style1" style="font-size: small;font-weight:bold;">
+                                                    <td class="" style="font-size: small;font-weight:bold;">
                                                         Branch :
                                                     </td>
                                                     <td class="auto-style7">
@@ -187,7 +187,7 @@
                                                 <tr>
                                                     <td class="auto-style2">
                                                         &nbsp;</td>
-                                                    <td class="auto-style1" style="font-size: small;font-weight:bold;">
+                                                    <td class="" style="font-size: small;font-weight:bold;">
                                                         Price :
                                                     </td>
                                                     <td class="auto-style7">
@@ -199,7 +199,7 @@
                                                 <tr>
                                                     <td class="auto-style2">
                                                         &nbsp;</td>
-                                                    <td class="auto-style1" style="font-size: small;font-weight:bold;">
+                                                    <td class="" style="font-size: small;font-weight:bold;">
                                                         &nbsp;</td>
                                                     <td class="auto-style7">
                                                         &nbsp;</td>
@@ -209,7 +209,7 @@
                                                 <tr>
                                                     <td class="auto-style2">
                                                         &nbsp;</td>
-                                                    <td class="auto-style1" style="font-size: small;font-weight:bold;">
+                                                    <td class="" style="font-size: small;font-weight:bold;">
                                                         Total Quantity :
                                                     </td>
                                                     <td class="auto-style7">
@@ -221,7 +221,7 @@
                                                 <tr>
                                                     <td class="auto-style2">
                                                         &nbsp;</td>
-                                                    <td class="auto-style1" style="font-size: small;font-weight:bold;">
+                                                    <td class="" style="font-size: small;font-weight:bold;">
                                                         Availabale Qnt :
                                                     </td>
                                                     <td class="auto-style7">
@@ -233,7 +233,7 @@
                                                 <tr>
                                                     <td class="auto-style2">
                                                         &nbsp;</td>
-                                                    <td class="auto-style1" style="font-size: small;font-weight:bold;">
+                                                    <td class="" style="font-size: small;font-weight:bold;">
                                                         Rent Qnt :
                                                     </td>
                                                     <td class="auto-style7">
@@ -245,7 +245,7 @@
                                                 <tr>
                                                     <td class="auto-style2">
                                                         &nbsp;</td>
-                                                    <td class="auto-style1" style="font-size: small;font-weight:bold;">
+                                                    <td class="" style="font-size: small;font-weight:bold;">
                                                         Detail :</td>
                                                     <td class="auto-style7">
                                                         <asp:Label ID="lbldetail" runat="server"></asp:Label>

@@ -11,7 +11,17 @@ namespace Library_Management
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Page.IsPostBack == false)
+            {
+                if(Session["admin_user"] != null)
+                {
+                    Label1.Text = Session["admin_user"].ToString();
+                }
+                else
+                {
+                    Response.Redirect("Default.aspx");
+                }
+            }
         }
     }
 }

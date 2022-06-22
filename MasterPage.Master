@@ -11,6 +11,19 @@
     <link href="StyleSheet1.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .auto-style1 {
+            background: #3f5ce0;
+            color: #fff;
+            font-weight: bold;
+            width: 197px;
+            height: 39px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 12px;
+            margin-left: 31;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -49,29 +62,29 @@
             </tr>
             <tr>
                 <td>
-                    <asp:Button ID="Button6" runat="server" CssClass="btnmenu" Text="Issue Book" 
+                    <asp:Button ID="Button6" runat="server" CssClass="auto-style1" Text="Issue Book" 
                         CausesValidation="False" PostBackUrl="~/IssueBook.aspx" />
                 </td>
                 <td>
                     <asp:Button ID="Button7" runat="server" CssClass="btnmenu" 
                         Text="Issue Report" CausesValidation="False" 
-                        PostBackUrl="~/Issuereport.aspx" />
+                        PostBackUrl="~/IssueReport.aspx" />
                 </td>
                 <td>
                     <asp:Button ID="Button8" runat="server" CssClass="btnmenu" Text="Return Book" 
                         CausesValidation="False" PostBackUrl="~/BookReturn.aspx" />
                 </td>
-                <td>
+                <!--<td>
                     <asp:Button ID="Button9" runat="server" CssClass="btnmenu" Text="Penalty" 
+                        CausesValidation="False" PostBackUrl="~/Penalty.aspx" />
+                </td>-->
+                <td>
+                    <asp:Button ID="Button12" runat="server" CssClass="btnmenu" Text="Penalty Report" 
                         CausesValidation="False" PostBackUrl="~/Penalty.aspx" />
                 </td>
                 <td>
-                    <asp:Button ID="Button12" runat="server" CssClass="btnmenu" Text="Penalty Report" 
-                        CausesValidation="False" PostBackUrl="~/MyPenalty.aspx" />
-                </td>
-                <td>
-                    <asp:Button ID="Button10" runat="server" CssClass="btnmenu" Text="LogOut" 
-                        CausesValidation="False"/>
+                    <asp:Button ID="Button10" runat="server" CssClass="btnmenu" Text="LogOut" BackColor="Red"
+                        CausesValidation="False" OnClick="Button10_Click"/>
                 </td>
             </tr>
         </table>

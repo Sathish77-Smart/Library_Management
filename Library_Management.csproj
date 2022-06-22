@@ -72,6 +72,7 @@
     <Content Include="Add_Publication.aspx" />
     <Content Include="Add_Student.aspx" />
     <Content Include="BookReport.aspx" />
+    <Content Include="BookReturn.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -81,6 +82,8 @@
     <Content Include="Default.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="IssueBook.aspx" />
+    <Content Include="IssueReport.aspx" />
+    <Content Include="Penalty.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -118,6 +121,9 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="StudentReport.aspx" />
+    <Content Include="Student_Page\Default.aspx" />
+    <Content Include="Student_Page\MyAccount.aspx" />
+    <Content Include="Student_Page\StyleSheet1.css" />
     <Content Include="StyleSheet1.css" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -157,6 +163,13 @@
     <Compile Include="BookReport.aspx.designer.cs">
       <DependentUpon>BookReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BookReturn.aspx.cs">
+      <DependentUpon>BookReturn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BookReturn.aspx.designer.cs">
+      <DependentUpon>BookReturn.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -179,12 +192,26 @@
     <Compile Include="IssueBook.aspx.designer.cs">
       <DependentUpon>IssueBook.aspx</DependentUpon>
     </Compile>
+    <Compile Include="IssueReport.aspx.cs">
+      <DependentUpon>IssueReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IssueReport.aspx.designer.cs">
+      <DependentUpon>IssueReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MasterPage.Master.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MasterPage.Master.designer.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Penalty.aspx.cs">
+      <DependentUpon>Penalty.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Penalty.aspx.designer.cs">
+      <DependentUpon>Penalty.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentReport.aspx.cs">
@@ -193,6 +220,27 @@
     </Compile>
     <Compile Include="StudentReport.aspx.designer.cs">
       <DependentUpon>StudentReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Student_Page\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student_Page\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Student_Page\MyAccount.aspx.cs">
+      <DependentUpon>MyAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student_Page\MyAccount.aspx.designer.cs">
+      <DependentUpon>MyAccount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Student_Page\Student.Master.cs">
+      <DependentUpon>Student.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student_Page\Student.Master.designer.cs">
+      <DependentUpon>Student.Master</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +256,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Student_Page\Student.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -115,7 +115,7 @@ namespace Library_Management
                     }
                     else
                     {
-                        var data2 = connect_Db.Select_IBook_Row(lblbname.Text, Convert.ToInt32(drpstudent.SelectedValue), con);
+                        var data2 = connect_Db.Select_IBook_Row(lblbname.Text, Convert.ToInt32(drpstudent.SelectedValue),null, con);
 
                         if (data2.Tables[0].Rows.Count != 0)
                         {
@@ -124,7 +124,7 @@ namespace Library_Management
                         else
                         {
 
-                            var data1 = connect_Db.Select_IBook_Row(null,Convert.ToInt32(drpstudent.SelectedValue), con);
+                            var data1 = connect_Db.Select_IBook_Row(null,Convert.ToInt32(drpstudent.SelectedValue),null, con);
                             if (data1.Tables[0].Rows.Count == 3)
                             {
                                 lblissue.Text = "A student has maximum 3 books !!";
