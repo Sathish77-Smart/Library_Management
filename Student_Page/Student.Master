@@ -33,19 +33,19 @@
                 </td>
                 <td>
                     <asp:Button ID="Button3" runat="server" CssClass="btnmenu" Text="My Report" 
-                        PostBackUrl="~/Student_Page/MyBook.aspx" CausesValidation="False" />
+                        PostBackUrl="~/Student_Page/MyReport.aspx" CausesValidation="False" />
                 </td>
                 <td>
                     <asp:Button ID="Button1" runat="server" CssClass="btnmenu" Text="Penalty Report" 
-                        PostBackUrl="~/Student_Page/MyPenalty.aspx" CausesValidation="False" />
+                        PostBackUrl="~/Student_Page/PenaltyReport.aspx" CausesValidation="False" />
                 </td>
                 <td>
                     <asp:Button ID="Button2" runat="server" CssClass="btnmenu" Text="Book Report" 
-                        CausesValidation="False" PostBackUrl="~/Student_Page/bookreport.aspx" />
+                        CausesValidation="False" PostBackUrl="~/Student_Page/BookReport.aspx" />
                 </td>
                 <td>
-                    <asp:Button ID="Button4" runat="server" CssClass="btnmenu" Text="Logout" 
-                         CausesValidation="False" />
+                    <asp:Button ID="Button4" runat="server" CssClass="btnmenu" Text="Logout" BackColor="Red"
+                         CausesValidation="False" OnClick="Button4_Click"/>
                 </td>
             </tr>
         </table>

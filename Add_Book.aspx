@@ -32,6 +32,27 @@
         .auto-style18 {
             width: 223px;
         }
+        .auto-style19 {
+            text-align: right;
+            color: black;
+            width: 223px;
+            height: 34px;
+        }
+        .auto-style20 {
+            text-align: left;
+            width: 236px;
+            height: 34px;
+        }
+        .auto-style21 {
+            text-align: right;
+            color: black;
+            width: 159px;
+            height: 34px;
+        }
+        .auto-style22 {
+            width: 345px;
+            height: 34px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -151,28 +172,29 @@
                         <td class="auto-style6"> 
                             &nbsp;</td>
                     </tr>
-                    <tr>
+                    <!--<tr>
                         <td class="auto-style17">
                             Book Id :
                         </td>
                         <td class="auto-style13">
                             <asp:TextBox ID="TextBox10" runat="server" CssClass="txt" Width="200px" ReadOnly="true"></asp:TextBox>
                         </td>
-                    </tr>
+                    </tr>-->
+                    <asp:TextBox ID="bookid" runat="server" CssClass="txt" Width="200px" ReadOnly="true" Visible="false"></asp:TextBox>
                     <tr>
-                        <td class="auto-style17">
+                        <td class="auto-style19">
                             Book Name :
                         </td>
-                        <td class="auto-style13">
+                        <td class="auto-style20">
                             <asp:TextBox ID="TextBox1" runat="server" CssClass="txt" Width="200px"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
                             ControlToValidate="txtpub" ErrorMessage="??" ForeColor="Red" 
                             SetFocusOnError="True"></asp:RequiredFieldValidator>
                         </td>
-                        <td class="auto-style15">
+                        <td class="auto-style21">
                             Book Details :
                         </td>
-                        <td class="auto-style6">
+                        <td class="auto-style22">
                             <asp:TextBox ID="TextBox2" runat="server" CssClass="txt" Width="200px"></asp:TextBox>
                         </td>
                     </tr>
@@ -184,26 +206,21 @@
                             <asp:TextBox ID="TextBox5" runat="server" CssClass="txt" Width="200px"></asp:TextBox>
                         </td>
                         <td class="auto-style15">
-                            Publication :
-                        </td>
-                        <td class="auto-style6">
-                            <asp:DropDownList ID="DropDownList3" runat="server"></asp:DropDownList>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="auto-style17">
-                            Branch :
-                        </td>
-                        <td class="auto-style13">
-                            <asp:DropDownList ID="DropDownList4" runat="server"></asp:DropDownList>
-                        </td>
-                        <td class="auto-style15">
                             Price :
                         </td>
                         <td class="auto-style6">
                             <asp:TextBox ID="TextBox8" runat="server" CssClass="txt" Width="200px"></asp:TextBox>
                         </td>
                     </tr>
+                    <!--<tr>
+                        <td class="auto-style17">
+                            Branch :
+                        </td>
+                        <td class="auto-style13">
+                            <asp:DropDownList ID="DropDownList4" runat="server"></asp:DropDownList>
+                        </td>
+                        
+                    </tr>-->
                     <tr>
                         <td class="auto-style17">
                             Quantity :
@@ -236,7 +253,7 @@
                         <td class="auto-style18">
                             &nbsp;</td>
                         <td class="auto-style13"> 
-                            &nbsp;</td>
+                            <asp:Label ID="lblscs" runat="server" ForeColor="Green"></asp:Label></td>
                         <td class="auto-style14">
                             &nbsp;</td>
                         <td class="auto-style6"> 
@@ -251,7 +268,8 @@
                 <table width="700" align="center">
                     <tr align="center">
                         <td>
-                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" Width="812px" AllowPaging="true">
+                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" Width="812px" AllowPaging="true" 
+                                OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowDeleting="GridView1_RowDeleting" AutoGenerateEditButton="true" AutoGenerateDeleteButton="true"> 
                                 <AlternatingRowStyle BackColor="White" />
                                 <Columns>
                                     <asp:BoundField HeaderText="Id" DataField="Id" />  

@@ -17,15 +17,22 @@ namespace Library_Management
         {
             if (Page.IsPostBack == false)
             {
-                con.Open();
-                var branch = connect_Db.Branch_Select(con);
-                drpbranch.DataSource = branch;
-                drpbranch.DataTextField = "BranchName";
-                drpbranch.DataValueField = "Id";
-                drpbranch.DataBind();
-                drpbranch.Items.Insert(0, "SELECT");
-                con.Close();
-                lblmsg.Text = "";
+                if (Session["admin_id"] == null)
+                {
+                    Response.Redirect("Default.aspx");
+                }
+                else
+                {
+                    con.Open();
+                    var branch = connect_Db.Branch_Select(con);
+                    drpbranch.DataSource = branch;
+                    drpbranch.DataTextField = "BranchName";
+                    drpbranch.DataValueField = "Id";
+                    drpbranch.DataBind();
+                    drpbranch.Items.Insert(0, "SELECT");
+                    con.Close();
+                    lblmsg.Text = "";
+                }
             }
         }
         protected void btnseach_Click(object sender, EventArgs e)

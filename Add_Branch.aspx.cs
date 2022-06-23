@@ -15,11 +15,18 @@ namespace Library_Management
         Connect_db connect_Db = new Connect_db();
         protected void Page_Load(object sender, EventArgs e)
         {
-            con.Open();
-            var data = connect_Db.Branch_Select(con);
-            GridView1.DataSource = data;
-            GridView1.DataBind();
-            con.Close();
+            if (Session["admin_id"] == null)
+            {
+                Response.Redirect("Default.aspx");
+            }
+            else
+            {
+                con.Open();
+                var data = connect_Db.Branch_Select(con);
+                GridView1.DataSource = data;
+                GridView1.DataBind();
+                con.Close();
+            }
         }
 
         protected void btnadd_Click(object sender, EventArgs e)

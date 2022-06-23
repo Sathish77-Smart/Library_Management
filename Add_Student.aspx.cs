@@ -20,17 +20,24 @@ namespace Library_Management
         {
             if (Page.IsPostBack == false)
             {
-                con.Open();
-                var data = connect_Db.Student_Select(con);
-                GridView1.DataSource = data;
-                GridView1.DataBind();
-                var branch = connect_Db.Branch_Select(con);
-                drpbranch.DataSource = branch;
-                drpbranch.DataTextField = "BranchName";
-                drpbranch.DataValueField = "Id";
-                drpbranch.DataBind();
-                drpbranch.Items.Insert(0, "SELECT");
-                con.Close();
+                if (Session["admin_id"] == null)
+                {
+                    Response.Redirect("Default.aspx");
+                }
+                else
+                {
+                    con.Open();
+                    var data = connect_Db.Student_Select(con);
+                    GridView1.DataSource = data;
+                    GridView1.DataBind();
+                    var branch = connect_Db.Branch_Select(con);
+                    drpbranch.DataSource = branch;
+                    drpbranch.DataTextField = "BranchName";
+                    drpbranch.DataValueField = "Id";
+                    drpbranch.DataBind();
+                    drpbranch.Items.Insert(0, "SELECT");
+                    con.Close();
+                }
             }
         }
         protected void btn_add_Click(object sender, EventArgs e)

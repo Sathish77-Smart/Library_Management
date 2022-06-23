@@ -11,7 +11,15 @@ namespace Library_Management.Student_Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["student_id"] == null)
+            {
+                Response.Redirect("../Default.aspx");
+            }
+        }
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            Session["student_id"] = null;
+            Response.Redirect("../Default.aspx");
         }
     }
 }

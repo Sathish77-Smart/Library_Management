@@ -42,6 +42,37 @@ namespace Library_Management
             }
             return ds;
         }
+        protected DataSet Convert_BookId_to_Name(DataSet ds, SqlConnection con)
+        {
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                if (ds.Tables[0].Columns.Contains("BookName"))
+                {
+                    string cmd3 = "select BookName from Book_Master where Id = " + ds.Tables[0].Rows[i]["BookId"] + "";
+                    SqlCommand SqlCmd3 = new SqlCommand(cmd3, con);
+                    SqlDataReader dr1 = SqlCmd3.ExecuteReader();
+                    if (dr1.HasRows)
+                    {
+                        dr1.Read();
+                        ds.Tables[0].Rows[i]["BookName"] = dr1["BookName"].ToString();
+                    }
+                    dr1.Close();
+                }
+                if (ds.Tables[0].Columns.Contains("StudentName"))
+                {
+                    string cmd3 = "select StudentName from Student_Table where Id = " + ds.Tables[0].Rows[i]["StudentId"] + "";
+                    SqlCommand SqlCmd3 = new SqlCommand(cmd3, con);
+                    SqlDataReader dr1 = SqlCmd3.ExecuteReader();
+                    if (dr1.HasRows)
+                    {
+                        dr1.Read();
+                        ds.Tables[0].Rows[i]["StudentName"] = dr1["StudentName"].ToString();
+                    }
+                    dr1.Close();
+                }
+            }
+            return ds;
+        }
 
         // Login page
         public SqlDataReader Login_Admin(string username, string password, SqlConnection con)
@@ -151,9 +182,9 @@ namespace Library_Management
             SqlCommand SqlCmd2 = new SqlCommand(cmd, con);
             SqlCmd2.ExecuteNonQuery();
         }
-        public void Book_Update(int id, string bookname, string bookdetails, string author, int pub_id, int branch_id, double price, int qty, string picture, SqlConnection con)
+        public void Book_Update(int id, string bookname, string bookdetails, string author, double price, int qty, SqlConnection con)
         {
-            string cmd = "Update Book_Master set BookName = '" + bookname + "', BookDetails = '"+bookdetails+"', AuthorName = '"+author+"', Publication_Id = "+pub_id+", Branch_Id = "+branch_id+", Price = "+price+", Quantity = "+qty+", Picture = '"+picture+"' where Id = " + id + "";
+            string cmd = "Update Book_Master set BookName = '" + bookname + "', BookDetails = '"+bookdetails+"', AuthorName = '"+author+"' Price = "+price+", Quantity = "+qty+" where Id = " + id + "";
             SqlCommand SqlCmd2 = new SqlCommand(cmd, con);
             SqlCmd2.ExecuteNonQuery();
         }
@@ -283,6 +314,7 @@ namespace Library_Management
                 SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
                 da.Fill(ds);
                 var ds1 = Convert_Id_to_Name(ds, con);
+                Convert_BookId_to_Name(ds1,con);
                 return ds1;
             }
             else if(bookname != null && stu_id > 0)
@@ -293,6 +325,7 @@ namespace Library_Management
                 SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
                 da.Fill(ds);
                 var ds1 = Convert_Id_to_Name(ds, con);
+                Convert_BookId_to_Name(ds1, con);
                 return ds1;
             }
             else if(Branch!= null && stu_id > 0 && bookname == null)
@@ -303,6 +336,7 @@ namespace Library_Management
                 SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
                 da.Fill(ds);
                 var ds1 = Convert_Id_to_Name(ds, con);
+                Convert_BookId_to_Name(ds1, con);
                 return ds1;
             }
             else
@@ -313,19 +347,41 @@ namespace Library_Management
                 SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
                 da.Fill(ds);
                 var ds1 = Convert_Id_to_Name(ds, con);
+                Convert_BookId_to_Name(ds1, con);
                 return ds1;
             }
         }
         public void Issue_Book_Insert(int bookid, string bookname, int stuid, string stuname, string branch, string publi, int returndays, string issuedate, SqlConnection con)
         {
-            DateTime returndate = Convert.ToDateTime(issuedate);
-            returndate.AddDays(returndays);
+            DateTime returndate = DateTime.Now.AddDays(returndays);
             string cmd = "Insert into Issue_Books(BookId,BookName,StudentId,StudentName,Branch,Publication,Return_Days,Issue_Date,Book_Return,Due_Date) values (" + bookid + ",'" + bookname + "'," + stuid + ",'" + stuname + "','" + branch + "','" + publi + "'," + returndays + ",'" + issuedate + "',"+1+",'"+returndate.ToString("dd/MM/yyyy")+"')";
             SqlCommand SqlCmd3 = new SqlCommand(cmd, con);
             SqlCmd3.ExecuteNonQuery();
             string cmd1 = "Update Book_Master set Available_Qty = Available_Qty - 1, Rent = Rent + 1 where BookName = '"+bookname+"'";
             SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
             SqlCmd1.ExecuteNonQuery();
+        }
+        public DataSet Book_Borrowed(int stuid, string branch, SqlConnection con)
+        {
+            string cmd1 = "select * from Issue_Books where Branch = '" + branch + "' and Book_Return = 0 and StudentId = " + stuid + "";
+            SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+            SqlDataReader dr = SqlCmd1.ExecuteReader();
+            List<int> id = new List<int>();
+            while (dr.Read())
+            {
+                id.Add(Convert.ToInt32(dr["BookId"]));
+            }
+            dr.Close();
+            DataSet ds = new DataSet();
+            for (int i = 0; i < id.Count; i++)
+            {
+                string cmd2 = "select * from Book_Master where Id = " + id[i] + "";
+                SqlCommand SqlCmd2 = new SqlCommand(cmd2, con);
+                SqlDataAdapter da = new SqlDataAdapter(SqlCmd2);
+                da.Fill(ds);
+            }
+            var ds1 = Convert_Id_to_Name(ds, con);
+            return ds1;
         }
 
         // Return Book
@@ -335,15 +391,27 @@ namespace Library_Management
             SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
             SqlCmd1.ExecuteNonQuery();
             DateTime dateTime = DateTime.Now;
-            string cmd2 = "Update Issue_Books set Book_Return = 0, Return_Days = 0, Return_Date = '"+dateTime.ToString("dd/MM/yyyy")+"' where BookId = " + BookId + " and Id = "+IssueId+" and StudentId = "+StudentId+"";
+            string cmd2 = "Update Issue_Books set Book_Return = 0, Return_Date = '"+dateTime.ToString("dd/MM/yyyy")+"' where BookId = " + BookId + " and Id = "+IssueId+" and StudentId = "+StudentId+"";
             SqlCommand SqlCmd2 = new SqlCommand(cmd2, con);
             SqlCmd2.ExecuteNonQuery();
+        }
+        public DataSet Select_Book_Return(int id, SqlConnection con)
+        {
+            string cmd1 = "select * from Issue_Books where StudentId = " + id + " and Book_Return = 0";
+            SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+            DataSet ds = new DataSet();
+            SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
+            da.Fill(ds);
+            var ds1 = Convert_Id_to_Name(ds, con);
+            Convert_BookId_to_Name(ds1, con);
+            return ds1;
         }
 
         // Penalty 
         public void Penalty(int issueid, int StudentId, string StudentName, int BookId, string BranchId, double penaltyamt, string Reason, SqlConnection con)
         {
-            string cmd = "Insert into Penalty_Table values (" + issueid + "," + StudentId + ",'" + StudentName + "'," + BookId + ",'" + BranchId + "'," + penaltyamt + ",'" + Reason + "')";
+            DateTime date = DateTime.Now;
+            string cmd = "Insert into Penalty_Table values (" + issueid + "," + StudentId + ",'" + StudentName + "'," + BookId + ",'" + BranchId + "'," + penaltyamt + ",'" + Reason + "','"+date.ToString("dd/MM/yyyy")+"')";
             SqlCommand SqlCmd3 = new SqlCommand(cmd, con);
             SqlCmd3.ExecuteNonQuery();
             DateTime dateTime = DateTime.Now;
@@ -353,5 +421,33 @@ namespace Library_Management
             SqlCmd2.ExecuteNonQuery();
         }
 
+        public DataSet Penalty_Report(int sid, SqlConnection con)
+        {
+            string cmd1 = "select * from Penalty_Table where StudentId = " + sid + "";
+            SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+            DataSet ds = new DataSet();
+            SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
+            da.Fill(ds);
+            ds.Tables[0].Columns.Add("Book_Name");
+            ds.Tables[0].Columns.Add("Price");
+            for(int i = 0; i < ds.Tables.Count; i++)
+            {
+                if(ds.Tables[0].Rows.Count != 0)
+                {
+                    string cmd2 = "select * from Book_Master where Id = " + Convert.ToInt32(ds.Tables[0].Rows[i]["BookId"]) + "";
+                    SqlCommand SqlCmd2 = new SqlCommand(cmd2, con);
+                    SqlDataReader dr = SqlCmd2.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        ds.Tables[0].Rows[i]["Book_Name"] = dr["BookName"].ToString();
+                        ds.Tables[0].Rows[i]["Price"] = Convert.ToDouble(dr["Price"]);
+                    }
+                    dr.Close();
+                }
+            }
+            var ds1 = Convert_Id_to_Name(ds, con);
+            Convert_BookId_to_Name(ds1, con);
+            return ds1;
+        }
     }
 }

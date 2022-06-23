@@ -155,7 +155,11 @@
                 </tr>
             
             </table>
-    <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" Width="939px" AutoGenerateColumns="False" AllowPaging="true"  align="center">
+    <asp:Panel ID="Panel1" runat="server" Visible="false">
+
+    </asp:Panel>
+    <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" Width="939px" AutoGenerateColumns="False" AllowPaging="true"  align="center"
+        >
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField HeaderText="Id" DataField="Id" />  

@@ -20,23 +20,30 @@ namespace Library_Management
         {
             if (Page.IsPostBack == false)
             {
-                con.Open();
-                var data = connect_Db.Book_Select(con);
-                GridView1.DataSource = data;
-                GridView1.DataBind();
-                var pub = connect_Db.Publication_Select(con);
-                DropDownList2.DataSource = pub;
-                DropDownList2.DataTextField = "Publication_name";
-                DropDownList2.DataValueField = "Id";
-                DropDownList2.DataBind();
-                DropDownList2.Items.Insert(0, "SELECT");
-                var branch = connect_Db.Branch_Select(con);
-                DropDownList1.DataSource = branch;
-                DropDownList1.DataTextField = "BranchName";
-                DropDownList1.DataValueField = "Id";
-                DropDownList1.DataBind();
-                DropDownList1.Items.Insert(0, "SELECT");
-                con.Close();
+                if (Session["admin_id"] == null)
+                {
+                    Response.Redirect("Default.aspx");
+                }
+                else
+                {
+                    con.Open();
+                    var data = connect_Db.Book_Select(con);
+                    GridView1.DataSource = data;
+                    GridView1.DataBind();
+                    var pub = connect_Db.Publication_Select(con);
+                    DropDownList2.DataSource = pub;
+                    DropDownList2.DataTextField = "Publication_name";
+                    DropDownList2.DataValueField = "Id";
+                    DropDownList2.DataBind();
+                    DropDownList2.Items.Insert(0, "SELECT");
+                    var branch = connect_Db.Branch_Select(con);
+                    DropDownList1.DataSource = branch;
+                    DropDownList1.DataTextField = "BranchName";
+                    DropDownList1.DataValueField = "Id";
+                    DropDownList1.DataBind();
+                    DropDownList1.Items.Insert(0, "SELECT");
+                    con.Close();
+                }
             }
         }
         protected void btn_add_Click(object sender, EventArgs e)
@@ -91,6 +98,55 @@ namespace Library_Management
             DropDownList2.SelectedIndex = 0;
             DropDownList1.SelectedIndex = 0;
 
+        }
+
+        protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            con.Open();
+            int id = Convert.ToInt32(GridView1.Rows[e.NewEditIndex].Cells[1].Text);
+            var data = connect_Db.Book_Report_Select(id, con);
+            TextBox1.Text = data.Tables[0].Rows[0]["BookName"].ToString();
+            TextBox2.Text = data.Tables[0].Rows[0]["BookDetails"].ToString();
+            TextBox5.Text = data.Tables[0].Rows[0]["AuthorName"].ToString();
+            TextBox8.Text = data.Tables[0].Rows[0]["Price"].ToString();
+            TextBox9.Text = data.Tables[0].Rows[0]["Quantity"].ToString();
+            add_panel.Visible = false;
+            edit_panel.Visible = true;
+            con.Close();
+        }
+
+        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            // Delete Book
+        }
+
+        protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            con.Open();
+            connect_Db.Book_Update(Convert.ToInt32(bookid.Text), TextBox1.Text, TextBox2.Text, TextBox5.Text, Convert.ToDouble(TextBox8.Text), Convert.ToInt32(TextBox9.Text), con);
+            GridView1.DataSource = null;
+            var data = connect_Db.Book_Select(con);
+            GridView1.DataSource = data;
+            GridView1.DataBind();
+            lblscs.Text = "Updated Successfully";
+            con.Close();
+        }
+
+        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            con.Open();
+            GridView1.DataSource = null;
+            add_panel.Visible = true;
+            edit_panel.Visible = false;
+            TextBox1.Text = "";
+            TextBox2.Text = "";
+            TextBox5.Text = "";
+            TextBox8.Text = "";
+            TextBox9.Text = "";
+            var data = connect_Db.Book_Select(con);
+            GridView1.DataSource = data;
+            GridView1.DataBind();
+            con.Close();
         }
     }
 }

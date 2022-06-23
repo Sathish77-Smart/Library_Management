@@ -17,21 +17,28 @@ namespace Library_Management
         {
             if (Page.IsPostBack == false)
             {
-                con.Open();
-                var pub = connect_Db.Publication_Select(con);
-                DropDownList2.DataSource = pub;
-                DropDownList2.DataTextField = "Publication_name";
-                DropDownList2.DataValueField = "Id";
-                DropDownList2.DataBind();
-                DropDownList2.Items.Insert(0, "SELECT");
-                var branch = connect_Db.Branch_Select(con);
-                DropDownList1.DataSource = branch;
-                DropDownList1.DataTextField = "BranchName";
-                DropDownList1.DataValueField = "Id";
-                DropDownList1.DataBind();
-                DropDownList1.Items.Insert(0, "SELECT");
-                con.Close();
-                lblmsg.Text = "";
+                if (Session["admin_id"] == null)
+                {
+                    Response.Redirect("Default.aspx");
+                }
+                else
+                {
+                    con.Open();
+                    var pub = connect_Db.Publication_Select(con);
+                    DropDownList2.DataSource = pub;
+                    DropDownList2.DataTextField = "Publication_name";
+                    DropDownList2.DataValueField = "Id";
+                    DropDownList2.DataBind();
+                    DropDownList2.Items.Insert(0, "SELECT");
+                    var branch = connect_Db.Branch_Select(con);
+                    DropDownList1.DataSource = branch;
+                    DropDownList1.DataTextField = "BranchName";
+                    DropDownList1.DataValueField = "Id";
+                    DropDownList1.DataBind();
+                    DropDownList1.Items.Insert(0, "SELECT");
+                    con.Close();
+                    lblmsg.Text = "";
+                }
             }
         }
         protected void btnviewbranch_Click(object sender, EventArgs e)

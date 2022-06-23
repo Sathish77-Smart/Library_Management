@@ -121,8 +121,11 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="StudentReport.aspx" />
+    <Content Include="Student_Page\BookReport.aspx" />
     <Content Include="Student_Page\Default.aspx" />
     <Content Include="Student_Page\MyAccount.aspx" />
+    <Content Include="Student_Page\MyReport.aspx" />
+    <Content Include="Student_Page\PenaltyReport.aspx" />
     <Content Include="Student_Page\StyleSheet1.css" />
     <Content Include="StyleSheet1.css" />
     <Content Include="Web.config" />
@@ -221,6 +224,13 @@
     <Compile Include="StudentReport.aspx.designer.cs">
       <DependentUpon>StudentReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Student_Page\BookReport.aspx.cs">
+      <DependentUpon>BookReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student_Page\BookReport.aspx.designer.cs">
+      <DependentUpon>BookReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Student_Page\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -234,6 +244,20 @@
     </Compile>
     <Compile Include="Student_Page\MyAccount.aspx.designer.cs">
       <DependentUpon>MyAccount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Student_Page\MyReport.aspx.cs">
+      <DependentUpon>MyReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student_Page\MyReport.aspx.designer.cs">
+      <DependentUpon>MyReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Student_Page\PenaltyReport.aspx.cs">
+      <DependentUpon>PenaltyReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student_Page\PenaltyReport.aspx.designer.cs">
+      <DependentUpon>PenaltyReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Student_Page\Student.Master.cs">
       <DependentUpon>Student.Master</DependentUpon>

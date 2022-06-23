@@ -17,20 +17,27 @@ namespace Library_Management
         {
             if (Page.IsPostBack == false)
             {
-                con.Open();
-                var pub = connect_Db.Publication_Select(con);
-                drppublication.DataSource = pub;
-                drppublication.DataTextField = "Publication_name";
-                drppublication.DataValueField = "Id";
-                drppublication.DataBind();
-                drppublication.Items.Insert(0, "SELECT");
-                var branch = connect_Db.Branch_Select(con);
-                drpbranch.DataSource = branch;
-                drpbranch.DataTextField = "BranchName";
-                drpbranch.DataValueField = "Id";
-                drpbranch.DataBind();
-                drpbranch.Items.Insert(0, "SELECT");
-                con.Close();
+                if (Session["admin_id"] == null)
+                {
+                    Response.Redirect("Default.aspx");
+                }
+                else
+                {
+                    con.Open();
+                    var pub = connect_Db.Publication_Select(con);
+                    drppublication.DataSource = pub;
+                    drppublication.DataTextField = "Publication_name";
+                    drppublication.DataValueField = "Id";
+                    drppublication.DataBind();
+                    drppublication.Items.Insert(0, "SELECT");
+                    var branch = connect_Db.Branch_Select(con);
+                    drpbranch.DataSource = branch;
+                    drpbranch.DataTextField = "BranchName";
+                    drpbranch.DataValueField = "Id";
+                    drpbranch.DataBind();
+                    drpbranch.Items.Insert(0, "SELECT");
+                    con.Close();
+                }
             }
         }
 

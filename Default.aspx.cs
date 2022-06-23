@@ -16,7 +16,7 @@ namespace Library_Management
         Connect_db login_Db = new Connect_db();
         protected void Page_Load(object sender, EventArgs e)
         {
-            lbl.Text = "";
+                lbl.Text = "";
         }
 
         protected void Button1_Click(object sender, EventArgs e)
