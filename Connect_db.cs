@@ -184,7 +184,7 @@ namespace Library_Management
         }
         public void Book_Update(int id, string bookname, string bookdetails, string author, double price, int qty, SqlConnection con)
         {
-            string cmd = "Update Book_Master set BookName = '" + bookname + "', BookDetails = '"+bookdetails+"', AuthorName = '"+author+"' Price = "+price+", Quantity = "+qty+" where Id = " + id + "";
+            string cmd = "Update Book_Master set BookName = '" + bookname + "', BookDetails = '"+bookdetails+"', AuthorName = '"+author+"', Price = "+price+", Quantity = "+qty+" where Id = " + id + "";
             SqlCommand SqlCmd2 = new SqlCommand(cmd, con);
             SqlCmd2.ExecuteNonQuery();
         }
@@ -302,6 +302,15 @@ namespace Library_Management
             SqlCommand SqlCmd3 = new SqlCommand(cmd3, con);
             SqlCmd3.ExecuteNonQuery();
         }
+        public void Student_Delete(int id, SqlConnection con)
+        {
+            string cmd2 = "Delete from Student_Table where Id = "+ id+"";
+            SqlCommand SqlCmd2 = new SqlCommand(cmd2, con);
+            SqlCmd2.ExecuteNonQuery();
+            string cmd3 = "Delete from Student_Login where Id = " + id + "";
+            SqlCommand SqlCmd3 = new SqlCommand(cmd3, con);
+            SqlCmd3.ExecuteNonQuery();
+        }
 
         // Issue Book
         public DataSet Select_IBook_Row(string bookname, int stu_id, string Branch, SqlConnection con)
@@ -331,6 +340,17 @@ namespace Library_Management
             else if(Branch!= null && stu_id > 0 && bookname == null)
             {
                 string cmd1 = "select * from Issue_Books where Branch = '" + Branch + "' and Book_Return = 1 and StudentId = " + stu_id + "";
+                SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
+                DataSet ds = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);
+                da.Fill(ds);
+                var ds1 = Convert_Id_to_Name(ds, con);
+                Convert_BookId_to_Name(ds1, con);
+                return ds1;
+            }
+            else if(Branch == null && stu_id == 0)
+            {
+                string cmd1 = "select * from Issue_Books where BookId = " + Convert.ToInt32(bookname) + " and Book_Return = 1";
                 SqlCommand SqlCmd1 = new SqlCommand(cmd1, con);
                 DataSet ds = new DataSet();
                 SqlDataAdapter da = new SqlDataAdapter(SqlCmd1);

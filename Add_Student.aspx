@@ -13,8 +13,9 @@
             margin-left: 0px;
             margin-right: 0px;
         }
-        .auto-style11 {
-            margin-left: 0px;
+        .auto-style12 {
+            width: 401px;
+            height: 274px;
         }
     </style>
 </asp:Content>
@@ -29,6 +30,7 @@
     </tr>
     <tr>
         <td>
+            <asp:Panel ID="Panel1" runat="server">
             <table align="center">
                 <tr>
                     <td class="lbl">
@@ -155,11 +157,76 @@
                 </tr>
             
             </table>
-    <asp:Panel ID="Panel1" runat="server" Visible="false">
-
     </asp:Panel>
-    <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" Width="939px" AutoGenerateColumns="False" AllowPaging="true"  align="center"
-        >
+    <asp:Panel ID="Panel2" runat="server" Visible="false">
+        <table align="center" class="auto-style12">
+                            <tr>
+                                <td class="tblhead" colspan="2">
+                                    Edit Student Detail</td>
+                            </tr>
+            <asp:TextBox ID="lblid" runat="server" Visible="false"></asp:TextBox>
+                            <tr>
+                                <td class="style3" style="font-weight:bold;color:black;text-align:right">
+                                    Name :</td>
+                                <td align="center">
+                                    <asp:TextBox ID="txtname" runat="server" CssClass="txt"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="style3" style="font-weight:bold;color:black;text-align:right">
+                                    Mobile :</td>
+                                <td align="center">
+                                    <asp:TextBox ID="txtname0" runat="server" CssClass="txt"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="style3" style="font-weight:bold;color:black;text-align:right">
+                                    Address :</td>
+                                <td align="center">
+                                    <asp:TextBox ID="txtname1" runat="server" CssClass="txt"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="style3" style="font-weight:bold;color:black;text-align:right">
+                                    City :</td>
+                                <td align="center">
+                                    <asp:TextBox ID="txtname2" runat="server" CssClass="txt"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="style3" style="font-weight:bold;color:black;text-align:right">
+                                    Pincode :</td>
+                                <td align="center">
+                                    <asp:TextBox ID="txtname3" runat="server" CssClass="txt"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="style3" style="font-weight:bold;color:black;text-align:right">
+                                    Email :
+                                </td>
+                                <td align="center">
+                                    <asp:TextBox ID="txtname4" runat="server" CssClass="txt"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="style2" style="font-weight:bold;color:black">
+                                    &nbsp;</td>
+                                <td align="left">
+                                    <asp:Button ID="btnupdate" runat="server" CssClass="btn" Font-Size="Small" 
+                                        Text="UPDATE" Width="100px" Onclick="btnupdate_Click"/>
+                                    <asp:Button ID="Button1" CssClass="btn" Font-Size="Small" runat="server" Text="CANCEL" Onclick="btncancel_Click"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="style2">
+                                    &nbsp;</td>
+                                <td>
+                                    <asp:Label ID="lbludt" runat="server" ForeColor="Red"></asp:Label></td>
+                            </tr>
+                        </table>
+    </asp:Panel>
+    <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" Width="1029px" AutoGenerateColumns="False" 
+        AllowPaging="true"  align="center" OnRowEditing="GridView1_RowEditing" OnRowDeleting="GridView1_RowDeleting" AutoGenerateDeleteButton="true" AutoGenerateEditButton="true">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField HeaderText="Id" DataField="Id" />  

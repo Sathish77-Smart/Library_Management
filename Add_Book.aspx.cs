@@ -110,6 +110,7 @@ namespace Library_Management
             TextBox5.Text = data.Tables[0].Rows[0]["AuthorName"].ToString();
             TextBox8.Text = data.Tables[0].Rows[0]["Price"].ToString();
             TextBox9.Text = data.Tables[0].Rows[0]["Quantity"].ToString();
+            bookid.Text = data.Tables[0].Rows[0]["Id"].ToString();
             add_panel.Visible = false;
             edit_panel.Visible = true;
             con.Close();
@@ -117,25 +118,44 @@ namespace Library_Management
 
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            // Delete Book
-        }
-
-        protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
             con.Open();
-            connect_Db.Book_Update(Convert.ToInt32(bookid.Text), TextBox1.Text, TextBox2.Text, TextBox5.Text, Convert.ToDouble(TextBox8.Text), Convert.ToInt32(TextBox9.Text), con);
-            GridView1.DataSource = null;
-            var data = connect_Db.Book_Select(con);
-            GridView1.DataSource = data;
-            GridView1.DataBind();
-            lblscs.Text = "Updated Successfully";
+            string id = GridView1.Rows[e.RowIndex].Cells[1].Text;
+            var data = connect_Db.Select_IBook_Row(id, 0, null, con);
+            if(data.Tables[0].Rows.Count > 0)
+            {
+                lblmsg.Text = "Unable to Delete, First clear the rented books";
+            }
+            else
+            {
+                connect_Db.Book_Delete(Convert.ToInt32(id), con);
+                GridView1.DataSource = -1;
+                var data1 = connect_Db.Book_Select(con);
+                GridView1.DataSource = data1;
+                GridView1.DataBind();
+                lblmsg.Text = "Deleted Successfully !!";
+            }
             con.Close();
         }
 
-        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void GridView1_RowUpdating(object sender, EventArgs e)
         {
             con.Open();
-            GridView1.DataSource = null;
+            connect_Db.Book_Update(Convert.ToInt32(bookid.Text), TextBox1.Text, TextBox2.Text, TextBox5.Text, Convert.ToDouble(TextBox8.Text), Convert.ToInt32(TextBox9.Text), con);
+            GridView1.EditIndex = -1;
+            var data = connect_Db.Book_Select(con);
+            GridView1.DataSource = data;
+            GridView1.DataBind();
+            add_panel.Visible = true;
+            edit_panel.Visible = false;
+            lblmsg.Text = "Updated Successfully";
+            lblmsg.ForeColor = Color.Green;
+            con.Close();
+        }
+
+        protected void GridView1_RowCancelingEdit(object sender, EventArgs e)
+        {
+            con.Open();
+            GridView1.EditIndex = -1;
             add_panel.Visible = true;
             edit_panel.Visible = false;
             TextBox1.Text = "";
@@ -143,6 +163,8 @@ namespace Library_Management
             TextBox5.Text = "";
             TextBox8.Text = "";
             TextBox9.Text = "";
+            lblmsg.Text = "";
+            lblmsg.ForeColor = Color.Red;
             var data = connect_Db.Book_Select(con);
             GridView1.DataSource = data;
             GridView1.DataBind();

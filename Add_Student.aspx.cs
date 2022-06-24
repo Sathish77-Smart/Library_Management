@@ -94,5 +94,77 @@ namespace Library_Management
             TextBox1.Text = "";
 
         }
+
+        protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            con.Open();
+            Panel1.Visible = false;
+            Panel2.Visible = true;
+            int id = Convert.ToInt32(GridView1.Rows[e.NewEditIndex].Cells[1].Text);
+            var data = connect_Db.Student_Report_Select(id, null, null, con);
+            lblid.Text = data.Tables[0].Rows[0]["Id"].ToString();
+            txtname.Text = data.Tables[0].Rows[0]["Studentname"].ToString();
+            txtname0.Text = data.Tables[0].Rows[0]["mobile"].ToString();
+            txtname1.Text = data.Tables[0].Rows[0]["address"].ToString();
+            txtname2.Text = data.Tables[0].Rows[0]["city"].ToString();
+            txtname3.Text = data.Tables[0].Rows[0]["pincode"].ToString();
+            txtname4.Text = data.Tables[0].Rows[0]["email"].ToString();
+            con.Close();
+        }
+
+        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            con.Open();
+            string id = GridView1.Rows[e.RowIndex].Cells[1].Text;
+            var data = connect_Db.Select_IBook_Row(null, Convert.ToInt32(id), null, con);
+            if (data.Tables[0].Rows.Count > 0)
+            {
+                lblmsg.Text = "Unable to Delete, First clear the rented books";
+            }
+            else
+            {
+                connect_Db.Student_Delete(Convert.ToInt32(id), con);
+                GridView1.DataSource = -1;
+                var data1 = connect_Db.Student_Select(con);
+                GridView1.DataSource = data1;
+                GridView1.DataBind();
+                lblmsg.Text = "Deleted Successfully !!";
+            }
+            con.Close();
+        }
+
+        protected void btnupdate_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            connect_Db.Student_Update(Convert.ToInt32(lblid.Text),txtname.Text,txtname0.Text,txtname1.Text,txtname2.Text,txtname3.Text,txtname4.Text,con);
+            lblmsg.Text = "Student Updated Successfullly !!";
+            Panel1.Visible = true;
+            Panel2.Visible = false;
+            GridView1.EditIndex = -1;
+            var data = connect_Db.Student_Select(con);
+            GridView1.DataSource = data;
+            GridView1.DataBind();
+            con.Close();
+        }
+
+        protected void btncancel_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            Panel1.Visible = true;
+            Panel2.Visible = false;
+            GridView1.EditIndex = -1;
+            var data = connect_Db.Student_Select(con);
+            GridView1.DataSource = data;
+            GridView1.DataBind();
+            lblmsg.Text = "";
+            lblid.Text = "";
+            txtname.Text = "";
+            txtname0.Text = "";
+            txtname1.Text = "";
+            txtname2.Text = "";
+            txtname3.Text = "";
+            txtname4.Text = "";
+            con.Close();
+        }
     }
 }
